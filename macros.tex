@@ -1,0 +1,40 @@
+\usepackage[numbers,super,sort&compress,comma]{natbib}
+%\usepackage[pdftex,colorlinks=true,urlcolor=blue,filecolor=blue,linkcolor=blue,citecolor=blue,breaklinks=true]{hyperref}
+\usepackage[pdftex,colorlinks=true,urlcolor=black,filecolor=black,linkcolor=black,citecolor=black,breaklinks=true]{hyperref}
+\usepackage{hypernat}
+\usepackage[pdftex]{graphicx}
+\usepackage{dcolumn} % Align table columns on decimal point
+\usepackage{listings}
+\usepackage[inline]{enumitem}
+
+\usepackage{palatino} % make fonts Helvetica for sans, palatino for serif
+\usepackage{wrapfig}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+
+% inline lists
+\usepackage[inline]{enumitem}
+\usepackage[compact,small]{titlesec}
+
+
+% Reduce the vertical padding around the wrapped figures
+\setlength{\intextsep}{-0.0cm}
+
+
+% Command to make intext references not superscripted or bracketed
+\makeatletter
+\newcommand*{\citenumns}[2][]{%
+  \begingroup
+  \let\NAT@mbox=\mbox
+  \let\@cite\NAT@citenum
+  \let\NAT@space\NAT@spacechar
+  \let\NAT@super@kern\relax
+  \renewcommand\NAT@open{}%
+  \renewcommand\NAT@close{}%
+  \cite[#1]{#2}%
+  \endgroup
+}
+\makeatother
+
+
+\newcommand{\note}[1]{\textcolor{blue}{#1}}
