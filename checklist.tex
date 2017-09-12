@@ -13,14 +13,38 @@ The first key to a successful outcome is appropriate experimental design.  That 
     coordinate?}  The statistical physics of free energy curves gives us
     considerable leeway in choosing our reaction coordinates --- in principle,
     any variable could be used, and if the calculation is performed correctly
-    the resulting free energy curve will be ``true''.  However, as a practical matter, interpreting the curve will be challenging (or even deceptive) unless the reaction coordinate is a good approximation to the true mechanism.
+    the resulting free energy curve will be ``true''.  However, as a practical
+    matter, interpreting the curve will be challenging (or even deceptive)
+    unless the reaction coordinate is a good approximation to the true
+    mechanism.
 
-    \item \textbf{What are the other relevant motions in the system? On what timescale do they take place?}
+    \item \textbf{What are the other relevant motions in the system? On what
+    timescale do they take place?}  The derivation of a free energy curve
+    involves computing a thermodynamic average over all degrees of freedom in
+    the system other than the chosen path.  In practical terms, this means that
+    any slow degrees of freedom in your system that aren't explicitly biased or
+    tracked must be sampled for the results to converge statistically.  This is
+    particularly problematic if there are multiple slowly exchanging states not
+    explicitly spanned by the chosen collective variable.
 
-    \item \textbf{What is the expected ``lengthscale'' of features on the reaction coordinate?}
+    \item \textbf{What is the expected ``lengthscale'' of features on the
+    reaction coordinate?}  Over what range will the collective variables be
+    tracked? How finely do we need to determine the free energy curve to be able
+    to answer the scientific question?
 
-    \item \textbf{Can the reaction coordinate be used to calculate a biasing energy or force? }
+    \item \textbf{Can the reaction coordinate be used to calculate a biasing
+    energy or force? }  Many techniques, such as metadynamics and umbrella
+    sampling, make direct use the chosen collective variables by adding
+    additional biasing forces to the simulation.  Thus, when using one of these
+    techniques, one is restricted to collective variables that can easily be
+    computed on the fly in the simulation, preferably without greatly reducing
+    computational performance.
 
-    \item \textbf{Are the barriers expected to enthalpic, entropic, or both? Are there major entropic differences between states?}  I'm thinking here of folding or oligomerization, where there's a big entropic barrier to finding one of the states.
+    \item \textbf{How many collective variables do you plan to bias?}
 
-\end{itemize}}
+    \item \textbf{Are the barriers expected to enthalpic, entropic, or both? Are
+    there major entropic differences between states?}  I'm thinking here of
+    folding or oligomerization, where there's a big entropic barrier to finding
+    one of the states.
+
+\end{itemize}
