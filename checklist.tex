@@ -40,11 +40,20 @@ The first key to a successful outcome is appropriate experimental design.  That 
     computed on the fly in the simulation, preferably without greatly reducing
     computational performance.
 
-    \item \textbf{How many collective variables do you plan to bias?}
+    \item \textbf{How many collective variables do you plan to bias?} There's a
+    challenging tradeoff here: If there are slow degrees of freedom you don't
+    bias, you may effectively just be doing brute force sampling.  On the other
+    hand, the number of trajectories typically increases exponentially with the
+    number of collective variables biased.  As a result, it is very rare that you see more than 1 or 2 dimensional enhanced sampling.
 
     \item \textbf{Are the barriers expected to enthalpic, entropic, or both? Are
-    there major entropic differences between states?}  I'm thinking here of
-    folding or oligomerization, where there's a big entropic barrier to finding
-    one of the states.
+    there major entropic differences between states?}  Different enhanced
+    sampling methods do better with different kinds of biases.  For example,
+    conventional replica exchange is great for purely enthalpic barriers
+    (raising the temperature exponentially increases the rate of barrier
+    crossing) but is less helpful with entropic ones (the only gain at high
+    temperature is an increase in the ``diffusion'' constant).  Thinking about
+    the kinds of barriers involved should inform your choice of enhanced
+    sampling technique.
 
 \end{itemize}
