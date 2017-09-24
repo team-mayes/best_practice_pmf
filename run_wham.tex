@@ -3,9 +3,9 @@
 \subsection{Computing free energy profiles using WHAM}
 
 The most common way to extract a free energy profile from umbrella sampling data
-is the weighted histogram analysis method, or WHAM \cite{2 kumar papers, Roux
-paper from 95, something recent}.  For the most common case, where all
-trajectories were run at the same temperature and the bias is soley a function
+is the weighted histogram analysis method, or WHAM \cite{Swendsen-1995, Roux-1995, Swendsen-1992}.
+For the most common case, where all
+trajectories were run at the same temperature and the bias is solely a function
 of the collective variable, the two key WHAM equations are
 
 EQUATIONS HERE, USING MY OLD NOTATION
@@ -19,7 +19,7 @@ values serve precisely this purpose; the WHAM derivation shows that iteratively
 solving these equations minimizes the variance in the resulting probability
 distribution.
 
-There are a number of WHAM implementations available.  Probably the most commonly used one is due to Grossfield \cite{WHAM}, but there are also version included as part of gromacs \cite{} and CHARMM \cite{}.
+There are a number of WHAM implementations available.  Probably the most commonly used one is due to Grossfield \cite{WHAM}, but there are also version included as part of gromacs \cite{Lindahl-2013} and CHARMM \cite{CHARMM2009}.
 
 Although WHAM is a robust method, there are a number of checks one should apply
 to any calculation performed with it (this is in addition to the design-level
@@ -87,7 +87,7 @@ well-sampled.  This is a complex general problem, so we can't give you a simple
 test.  Rather, you have to honestly look at your system, and verify that
 overlapping trajectories are genuinely similar (and not just similar according
 to the collective variable).  The only automated procedure for looking for
-problems that we are aware of is due to Neale et al \cite{ADD REF}, and only
+problems that we are aware of is due to Neale et al \cite{Pomes-2014}, and only
 applies to the case where the umbrella sampling was performed using Hamiltonian
 replica exchange; in essence, the method looks for regions of the collective
 variable where there is hysteresis in the migration of the trajectories up and
