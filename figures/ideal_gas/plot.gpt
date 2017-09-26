@@ -1,0 +1,17 @@
+set terminal pdfcairo enhanced font "Arial, 9" size 5cm,5cm
+set encoding iso_8859_1
+set output "free.pdf"
+
+set multiplot layout 2,1
+set xrange [0:5]
+unset xtics
+unset ytics
+set ylabel "Probability"
+set xlabel "Coordinate"
+set label "A" at 0.5, 22
+plot 10 title "Prob Density", x*x title "Probability"
+
+unset label
+set label "B" at 0.5, 5
+set ylabel "Free energy"
+plot 1 title "PMF", -log(x*x) title "Free energy"
