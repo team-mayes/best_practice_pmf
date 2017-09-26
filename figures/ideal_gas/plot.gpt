@@ -7,7 +7,7 @@ set xrange [0:5]
 unset xtics
 unset ytics
 set ylabel "Probability"
-set xlabel "Coordinate"
+set xlabel "Distance"
 set label "A" at 0.5, 22
 plot 10 title "Prob Density", x*x title "Probability"
 
