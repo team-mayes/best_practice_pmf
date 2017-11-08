@@ -3,17 +3,10 @@ Best Practices document to be submitted to the Living Journal of Computational M
 
 Best practices for computing a potential of mean force and free energy profiles
 
-Contributors: Anthony Hazel, Michael Shirts (mrshirts), Sunny Hwang, Alan Grossfield (agrossfield), Baron Peters (n/a), Heather Mayes (hmayes)
-People to invite: Jon Whitmer, Andrew Ferguson, Francesco Gervasio
+Contributors: Anthony Hazel, Michael Shirts (mrshirts), Sunny Hwang, Alan Grossfield (agrossfield), Baron Peters (n/a), Heather Mayes (hmayes), Jon Whitmer, Andrew Ferguson
+People to invite: Francesco Gervasio
 
 This is intended to be a simple of workflow for designing a free energy curve / PMF calculation
-
-
-The Github document is:
-
-https://github.com/team-mayes/best_practice_pmf
-
-
 
 
 #Introduction and Scope
@@ -24,9 +17,9 @@ Discuss what can do, but that will not be the focus on this document
 Rates (need for diffusion coefficient)
 
 We will not cover the basics.  Consult other best practices documents
-   - MD basics (TODO: GitHub link)
-   - MD setup, biomolecular setup (TODO: GitHub link)
-   - Statistical error and uncertainty analysis? (TODO: GitHub link)
+   - MD basics (https://github.com/MobleyLab/basic_simulation_training)
+   - MD setup, biomolecular setup (https://github.com/michellab/BioMolSetupPaper)
+   - Statistical error and uncertainty analysis? (https://github.com/dmzuckerman/Sampling-Uncertainty/)
  You may want to glance at these first to check if you're comfortable with the material.
 
 We will not cover alchemical methods.  See their best practices document  
