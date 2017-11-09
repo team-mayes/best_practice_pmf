@@ -47,7 +47,11 @@ This document provides a starting point for calculating a potential of mean forc
 \section{Introduction}
 % TODO: this is the outline from the meeting. Needs expansion.
 % Up for task: Heather
-The goal of this article is help researchers get started productively. The theory is well laid out (TODO: refs), and many methods are available. While some considerations are system dependent, we aim to provide overall guidelines. In this document, we will introduce key terms and some common methods.
+
+The goal of this article is help researchers get started productively.
+The theory is well laid out (add references) and many methods are available.
+While some considerations are system dependent, we aim to provide overall guidelines.
+In this document, we will introduce key terms and some common methods.
 
 Note that we will not cover how to perform molecular simulations in this document. We refer readers to other best practices documents for introductory guides:
 \begin{itemize}
@@ -60,10 +64,7 @@ You may want to review these first to check if you're comfortable with the mater
 Additionally, we will not cover alchemical methods. 
 % If they have a GitHub link, add it here)
 
-
 Distinguish between methods that choose a coordinate a priori, and those that do not. We will mention those that do not (MSMs, TPS) but leave outside the scope.
-MSMs gives an RC but hard to relate to any theoretical condition, change temp, anything.
-What are you going to do: RC for further sampling? If you want to generate low D representation MSMs are great; if want to discover an RC, TPS
 In the scope will only be combinations of sampling and constructing PMFs from a priori chosen coordinates. Will discuss a first step of learning about the system and metastable states before choosing:
 \begin{itemize}
 \item US/Replica exchange
@@ -71,6 +72,20 @@ In the scope will only be combinations of sampling and constructing PMFs from a 
 \item Adaptive force biasing
 \item Some on weighted ensemble
 \end{itemize}
+
+Restrict ourselves to a priori choices of RC. Mention that others exist
+\begin{itemize}
+\item approximate continuous function with discrete samples (most of the time)
+\item Projection onto the state space
+\item Histograms vs. laying down Gaussians
+\item Histograms always underestimates barrier heights (not the worst problem)
+\end{itemize}
+
+MSM as an adaptive sampling method (will exclude this from our scope);
+MSMs gives an RC but hard to relate to any theoretical condition, change temp, anything.
+What are you going to do: RC for further sampling? If you want to generate low D representation MSMs are great; if want to discover an RC, TPS
+
+
 
 There are many other enhanced sampling methods (multicanonical, Wang-Landau, Adaptive Umbrella Sampling, Tsallis statistics).  Can't cover them all. We can suggest reviews.
 
@@ -196,7 +211,6 @@ Mention what they do.
 %   - TRAM would also be a method to compute a pmf (https://github.com/markovmodel/thermotools/tree/devel/ext) (combine weighted and unweighted)
 %      - Ask Toni Mey to insert something smart here
 
-
 \subsection{Computing free energy profiles using WHAM}
 % Alan Grossfield
 \input{run_wham} 
@@ -241,6 +255,11 @@ Mention what they do.
 %%- PMF only defined up to constant, how do you align curves to get error bars
 %%   - Several possible solutions (matrix of differences, bin-to-bin differences) credit Chodera, Louis Smith came up with bin-to-bin diffs, not published
 %
+% Include “Good ideas that didn’t work”? -- examples of problems in PMF calculations
+%Suggestion by Dan Zuckerman
+%E.g. “I chose the wrong reaction coordinate and it ruined my life”
+%
+
 
 \clearpage
 

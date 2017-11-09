@@ -6,6 +6,7 @@
 *.log
 *.out
 *.bib-stamp
+*.suppinfo
 
 # ignore other temp files from vim etc
 *.sw*
