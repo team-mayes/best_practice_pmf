@@ -1,0 +1,251 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% LIVECOMS ARTICLE TEMPLATE FOR BEST PRACTICES GUIDE
+%%% ADAPTED FROM ELIFE ARTICLE TEMPLATE (8/10/2017)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[9pt]{livecoms}
+
+%\input{macros}
+\newcommand{\versionnumber}{0.1}  % you should update the minor version number in preprints and major version number of submissions.
+\newcommand{\githubrepository}{\url{https://github.com/team-mayes/best_practice_pmf}}  %this should be the main github repository for this article
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Best Practices for Computing Free Energy Profiles and Potentials of Mean Force : v\versionnumber}
+
+% Number is for affliation; add your name as you contribute; we can figure out order as the manuscript takes shape
+\author[1]{Alan Grossfield}
+\author[2]{Heather Mayes}
+\affil[1]{University of Rochester}
+\affil[2]{University of Michigan}
+%\affil[3]{University 3}
+%\affil[4]{Univ 4}
+%\affil[5]{Affiliation 5}
+
+%\corr{email1@example.com}{FMS}  % Correspondence emails.  FMS and FS are the appropriate authors initials.
+%\corr{email2@example.com}{FS}
+
+%\contrib[\authfn{1}]{These authors contributed equally to this work}
+%\contrib[\authfn{2}]{These authors also contributed equally to this work}
+
+%\presentadd[\authfn{3}]{Department, Institute, Country}
+%\presentadd[\authfn{4}]{Department, Institute, Country}
+
+\blurb{This LiveCoMS document is maintained online on GitHub at \githubrepository; to provide feedback, suggestions, or help improve it, please visit the GitHub repository and participate via the issue tracker.}
+
+
+\begin{document}
+\begin{frontmatter}
+\maketitle
+
+% TODO: revisit later; add in which methods we cover
+\begin{abstract}
+This document provides a starting point for calculating a potential of mean force and free energy profiles from molecular dynamics simulations. There are an increasing number of methods for this type of work. In the present guide, we introduce you to some of the popular current methods, as well as considerations to take into account no matter the method chosen. We point to further resources to gain a deeper understanding into the vibrant topic.
+\end{abstract}
+\end{frontmatter}
+
+\section{Introduction}
+% TODO: this is the outline from the meeting. Needs expansion.
+% Up for task: Heather
+The goal of this article is help researchers get started productively. The theory is well laid out (TODO: refs), and many methods are available. While some considerations are system dependent, we aim to provide overall guidelines. In this document, we will introduce key terms and some common methods.
+
+Note that we will not cover how to perform molecular simulations in this document. We refer readers to other best practices documents for introductory guides:
+\begin{itemize}
+\item MD basics \url{https://github.com/MobleyLab/basic_simulation_training}
+\item MD setup, biomolecular setup \url{https://github.com/michellab/BioMolSetupPaper}
+\item Statistical error and uncertainty analysis \url{https://github.com/dmzuckerman/Sampling-Uncertainty/}
+\end{itemize}
+You may want to review these first to check if you're comfortable with the material.
+
+Additionally, we will not cover alchemical methods. 
+% If they have a GitHub link, add it here)
+
+
+Distinguish between methods that choose a coordinate a priori, and those that do not. We will mention those that do not (MSMs, TPS) but leave outside the scope.
+MSMs gives an RC but hard to relate to any theoretical condition, change temp, anything.
+What are you going to do: RC for further sampling? If you want to generate low D representation MSMs are great; if want to discover an RC, TPS
+In the scope will only be combinations of sampling and constructing PMFs from a priori chosen coordinates. Will discuss a first step of learning about the system and metastable states before choosing:
+\begin{itemize}
+\item US/Replica exchange
+\item Metadynamics
+\item Adaptive force biasing
+\item Some on weighted ensemble
+\end{itemize}
+
+There are many other enhanced sampling methods (multicanonical, Wang-Landau, Adaptive Umbrella Sampling, Tsallis statistics).  Can't cover them all. We can suggest reviews.
+
+Discuss analysis of results with committor analysis.
+
+\section{Key Terms}
+% TODO: this is the outline from the meeting, plus some beginning of full sentences. Needs expansion.
+% Up for task: Alan, Heather
+
+Discuss both the definitions and actual use (not always strictly correct!)
+
+\subsection{Potential of Mean Force}
+
+%\section{Physical Meaning of free energy curves and potentials of mean force}
+\input{phys_meaning} % Alan Grossfield
+
+PMF (analogous to probability density)  vs free energy surface (analogous to probability); Only ABF gives a PMF, umbrella sampling and metadynamics give free energy curves.
+
+PMF is a free energy as a function of almost, but not all the coordinates:
+\begin{itemize}
+\item PMF(x0,x1. . . ) = -kb T log x  x0,x1 exp(- beta U(x)) dx (all but x0, x1)
+\item Only defined up to a constant.
+\item write equation to show distinction between PMF and free energy
+\item Jacobian correction
+\begin{itemize}
+\item Common jacobians -- distance ($ J= 4 \pi r^2$), angles (J = 1)
+\item Other common rxn coords J is unknown (native contacts, RMSD)
+\item Make a figure showing free energy and PMF for a couple of simple systems (2 ideal gas particles, 2 LJ particles?)
+\end{itemize}
+\end{itemize}
+
+PMF is a fundamentally a continuous function (unless the rxn coord is intrinsically discrete), but we have to approximate the continuous function when we estimate it. Two approaches to approximate:
+\begin{itemize}
+\item Expectations of histograms or other indicator functions
+$\Delta A(xi) = \sum_{k=1}^K \sum_{n=1}^N \sum W_i(x_n) I_k(x_n)$, where $I_k$ is some local indicator function, like a top hat function centered at $x_n$, or a gaussian centered at $x_n$.
+\item Some sort of fit from the data to a continuous function with different parameters, for example by a least squares fit or Kullbeck-Liebler divergence. (refs)  Useful if you're using the curves as input to simpler calculations
+\end{itemize}
+
+\subsection{What is the reaction coordinate/OP/CV?}
+%From the theory of phase transitions:
+
+\begin{itemize}
+
+  \item \textbf{Potential of mean force (PMF)} is formally the ``potential'' derived by integrating the mean force along a path or coordinate \cite{Kirkwood-1935}, analogous to the probability density along that coordinate.  Often used interchangeably with \textbf{Free energy curve}, but strictly the PMF does not contain entropic contributions from the Jacobian of the chosen coordinate.
+
+  \item \textbf{Free energy curve} is the free energy as a function of a
+  particular coordinate or coordinates.  It is directly related to the
+  probability distribution along that coordinate, and implicitly includes the
+  entropic contributions from the Jacobian.
+
+
+  \item \textbf{Collective variable (CV):} any variable composed of displacements of
+  multiple particle coordinates.  It could be as simple as the distance between
+  two particles, or complex like the fraction of native contacts present in a
+  protein folding simulation.
+
+  \item \textbf{Order parameter:}  a collective variable that distinguishes between two or more stable states
+
+  \item \textbf{Reaction coordinate (RC):} the pathway followed by a chemical reaction or conformational change.  Often used interchangeably with collective variable.
+
+\end{itemize}
+
+\section{Considerations before you start computing}
+% TODO: check the outline below and delete is covered in the text written so far
+% Up for task: Allan
+
+%Is the question well-posed? Is the project doable?
+%   - Sturgeon’s law as an organizing principle (“Ninety percent of everything is crud”) -- what can we do to drop the percentage?
+%   -Recommend starting with conventional MD (possibly with T Rep Ex) to understand the system
+%   - What is the choice for (x0,x1, . . . ) that you don’t integrate over?
+%      - Careful choice needed, poor choice uninformative or misleading
+%      - All choices are true, only some are useful or informative.
+%         - if you try to interpret mechanism, you're asserting that all other degrees of freedom are fast (and thus in equilibrium) with respect to the chosen ones.
+%      - What are relevant degree or degrees of freedom?
+%   - What kinds of barriers are expected along the reaction coordinate?
+%   - Lengthscale of features on reaction coordinate   
+%   - Timescales for relaxation of orthogonal degrees of freedom? How long do individual trajectories need to be?  
+%   - Can we implement the reaction coordinate efficiently as a bias?
+%      - Most packages implement some simple restraints
+%      - Plugins: COLVARS, PLUMED
+%   - How many dimensions?
+%      - Usually, people only do 1 or 2 dimensions.
+%      - More dimensions makes it more complicated, both to compute, and more importantly to understand what the heck is going on.  Most of the recommendations will be for 1 and 2 dimensions, with a separate section for ndim > 2.
+
+
+\subsection{Checklist for designing a free energy profile calculation}
+\input{checklist} % Alan Grossfield
+
+\section{Sampling techniques}
+% TODO: this is the outline from the meeting. Needs expansion.
+% Up for task: ?
+
+Mention what they do.
+\begin{itemize}
+\item Restrict ourselves to conventional/T Rep EX, US / HREx , Metadynamics, and adaptive force biasing; add strengths and weaknesses of each method (dynamic range to be surmounted)
+\item Conventional MD / T Rep Ex (conventional histogram; MSM to analyze)
+\item Direct counting/MSM: Usually bad, because only samples the minima, not the barriers.  Will fail even in the absence of barriers -- just need a significant (> 5 kT, maybe) range of free energies
+\item Umbrella sampling / Ham Rep Ex (need weighted)
+\item Design simulation so it can be tested (Prefer running each window multiple times, construct as independently as possible, best way to get error bars)
+\item Tests for convergence and self-consistency. For Ham Rep Ex\cite{Neale2014}
+\end{itemize}
+
+\section{Computing the free energy/PMF from US/Ham Rep Ex}
+% TODO: this is the outline from the meeting. Needs expansion.
+% Up for task: Alan for WHAM; others for other sections?
+
+%   - WHAM
+%      - Several implementations: mine (http://membrane.urmc.rochester.edu/content/wham), g_wham in gromacs, built in to CHARMM
+%      - Special case for extreme range of free energies: https://github.com/dejunlin/gwham
+%      - Minimal tests you need to do
+%         - Check that histograms overlap
+%         - Check that bin size is small enough that it’s not altering the answer
+%         - Tolerance must be small enough that the PMF isn’t changing
+%         - Make sure units match
+%            - Mention Amber issue with angle restraints as example
+%         - Make sure factor of 1/2 matches
+%         - This is the terminology from Grossfield's WHAM, look at g_wham, etc and check how they talk about it
+%      - Computing other properties using umbrella-sampled data
+%         - In principle, WHAM can do it, but probably not the best choice because it's harder to control histogramming artifacts. Recommend
+%         MBAR
+%   - MBAR (https://github.com/choderalab/pymbar), also an implementation in Toni Mey's github repo, add link
+%      - @mrshirts: insert something smart here. :)
+%   - TRAM would also be a method to compute a pmf (https://github.com/markovmodel/thermotools/tree/devel/ext) (combine weighted and unweighted)
+%      - Ask Toni Mey to insert something smart here
+
+
+\subsection{Computing free energy profiles using WHAM}
+% Alan Grossfield
+\input{run_wham} 
+
+%- Metadynamics (well-tempered metadynamics)
+%   - why choose which variant of metadynamics
+%   - risks of choosing too fact an annealing time in well-tempered
+%   - Use estimator from bias vs. run for a while, then fix the bias and sampling on that then reweight (in which case you're probably better off just using original metadynamics)
+%   - One of the people we've discussed inviting should really write this
+%
+%- Weighted ensemble; good for complex/computationally expensive reaction coordinates
+%   - explain the principle, link to original Huber and Kim 1996 and Chong and Zuckerman 2017
+%   - advantage is that you don't need to put the bias into the dynamics
+%      - great for complex or expensive reaction coordinates
+%      - gives correct kinetics for free in additional to free energy curve
+%      - WESTPA as reference implementation
+%- Adaptive biasing force--samples and computes PMF
+%   - Extended ABF
+%   - Do we need an expert on this? Jerome Henin maybe?
+
+\section{Analysis common to all methods}
+% TODO: this is the outline from the meeting.
+% Up for task: ?
+
+%%- Signatures of what has gone wrong within post-processing/ troubleshooting guide
+%%   - Units (open MM is good, Amber has inconsistent units in angle restraints)
+%%   - Stupid factor of 2 prefactors are inconsistent across codes
+%%   - Error
+%%   - Show some plots of what “bad” data will look like
+%%      - I have some examples on butane I can dig up
+%%- Signatures of what has gone wrong in the simulation itself
+%%   - Hysteresis
+%%   - Slow relaxation -- trim off the front of individual windows, look for systematic change in the resulting curve, cite Neale and Pomes
+%%   - Look for structural similarity in neighboring bins
+%%   - Look for hidden orthogonal barriers in HamRepex by failed replica percolation (Neale and Pomes)
+%%- Committor analysis to verify you've found transition state
+%%- Computing error bars on PMFs / free energy curves
+%%   - Bootstrapping, etc: needs correlation as input, not particularly reliable.  
+%%      - Not necessarily the correlation time of the rxn coord
+%%      - Example: ion through ion channel, z-fluc of ion is faster than protein fluctuations
+%%- Do multiple independent runs
+%%- PMF only defined up to constant, how do you align curves to get error bars
+%%   - Several possible solutions (matrix of differences, bin-to-bin differences) credit Chodera, Louis Smith came up with bin-to-bin diffs, not published
+%
+
+\clearpage
+
+\renewcommand\bibnumfmt[1]{#1.}
+\bibliography{best_pmf}
+\bibliographystyle{vancouver-livecoms}
+
+\end{document}

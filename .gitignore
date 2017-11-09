@@ -1,4 +1,4 @@
-# ignore the crap that latex generates
+# ignore the files that latex generates upon build
 
 *.aux
 *.bbl
@@ -7,13 +7,8 @@
 *.out
 *.bib-stamp
 
-# ignore the crap that vim generates
+# ignore other temp files from vim etc
 *.sw*
-
-
-# ignore the pdf that latex produces
-# can't say *.pdf because there will be pdfs in the figures directory
-# that we want to keep
-paper.pdf
-
+*.bak
+.idea/
 
