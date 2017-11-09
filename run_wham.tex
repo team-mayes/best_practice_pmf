@@ -1,0 +1,92 @@
+% !TEX root = ./paper.tex
+
+The most common way to extract a free energy profile from umbrella sampling data
+is the weighted histogram analysis method, or WHAM \cite{Swendsen-1995, Roux-1995, Swendsen-1992}.
+For the most common case, where all
+trajectories were run at the same temperature and the bias is solely a function
+of the collective variable, the two key WHAM equations are
+
+EQUATIONS HERE, USING MY OLD NOTATION
+
+where DEFINE TERMS HERE. Each trajectory is histogrammed along the chosen
+collective variable, and thus produced a biased estimate of the probability
+distribution. If there were only one trajectory, the WHAM equations would reduce
+to simple thermodynamic reweighting, but with multiple estimates from the
+various trajectories one must compute some kind of weighted average.  The  $F_i$
+values serve precisely this purpose; the WHAM derivation shows that iteratively
+solving these equations minimizes the variance in the resulting probability
+distribution.
+
+There are a number of WHAM implementations available.  Probably the most commonly used one is due to Grossfield \cite{WHAM}, but there are also version included as part of gromacs \cite{Lindahl-2013} and CHARMM \cite{CHARMM2009}. Software implementing Bayesian formulation of WHAM \cite{ferguson2017bayeswham}.
+
+Although WHAM is a robust method, there are a number of checks one should apply
+to any calculation performed with it (this is in addition to the design-level
+tests discussed in Section \ref{s:precheck}).
+
+\begin{itemize}
+
+    \item \textbf{Check that your units are consistent}.  Many WHAM codes are
+    agnostic to the choice of collective variable, but do require that the units
+    be consistent.  Specifically, most implementations assume the restraints are
+    harmonic in the reaction coordinate, and thus expect that if the time series
+    are given in units of $X$ (e.g. {\AA} or nm for a distance), the restraint's
+    spring constant is given in units of $\mathrm{energy}/X^2$, and will output
+    the free energy curve in units of $\mathrm{energy}$.  There are known issues
+    with some simulation packages. Most notably, when restraining angles or
+    torsions in Amber, the location of the restraint minimum is specified in
+    degrees (as is the output), but the restraint is specified in radians.  This
+    mismatch is dramatic enough to cause the WHAM calculation to fail
+    immediately, generally producing all ``NaN'' values for the free energy
+    curve.
+
+    \item \textbf{Check the functional form of the restraint}.  Although most
+    packages use harmonic restraints, some include a prefactor of 0.5, while
+    others do not.  To produce correct results, you may need to given a
+    different value to the WHAM code than you did to the simulation package.
+    For example, NAMD and Amber restraints restraints do not use the prefactor,
+    while Grossfield's WHAM does, so if you ran a NAMD simulation with a spring
+    constant of 10 kcal/{\AA}$^2$, you would put 20 as the spring constant in
+    the WHAM metadata file.
+
+    \item \textbf{Verify the histograms overlap}.  If there are ``bare'' patches
+    (or even just poorly sampled regions), the free energy profile will not be
+    reliable.  This test should be performed \emph{before} running WHAM; WHAM
+    works best when the total number of samples is roughly constant across the
+    whole range of the collective variable.
+
+    \item \textbf{Make sure the iteration is fully converged}.  The WHAM
+    equations are generally solved by iteration to self-consistency, so it is
+    crucial to ensure that the iteration has proceeded far enough that the
+    answer is not changing.  You should check the manual for your chosen WHAM
+    implementation for a suggested value, but also should (if possible) plot the
+    intermediate free energy curves to verify they've stopped changing.  If the
+    range of values on your free energy curve is especially large (hundreds of
+    $k_B T$), there may be significant issues with numerical precision
+    preventing the curves from converging.  In this case, you can use a
+    special-purpose WHAM implementation intended to handle this case, available
+    from \url{https://github.com/dejunlin/gwham}.
+
+    \item \textbf{Check that the chosen bin width isn't altering the answer}.
+    Finite-width histogram bins intrinsically smooth the free energy profile by
+    breaking it into regions.  This effect can be minimized (and often
+    effectively eliminated) by reducing the bin size, at the cost of reducing
+    the number of samples in each bin, which makes the curve noisier.  To verify
+    that the bin width isn't a problem, one should always re-run WHAM several
+    times with different bin width to verify that the resulting curve does not
+    vary systematically.  The key is that the bins must be narrower than the
+    relevant ``features'' of the free energy curve; bins comparable to or
+    broader than these features with obscure them or even smooth them away.
+
+\end{itemize}
+
+It is also crucial to assess whether other relevant orthogonal degrees of
+freedom (variables other than the one used as a collective variable) are
+well-sampled.  This is a complex general problem, so we can't give you a simple
+test.  Rather, you have to honestly look at your system, and verify that
+overlapping trajectories are genuinely similar (and not just similar according
+to the collective variable).  The only automated procedure for looking for
+problems that we are aware of is due to Neale et al \cite{Pomes-2014}, and only
+applies to the case where the umbrella sampling was performed using Hamiltonian
+replica exchange; in essence, the method looks for regions of the collective
+variable where there is hysteresis in the migration of the trajectories up and
+down the variable range as evidence for slow orthogonal relaxation.
