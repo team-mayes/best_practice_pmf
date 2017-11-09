@@ -1,0 +1,87 @@
+\begin{thebibliography}{9}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\urlprefix}{}
+\providecommand{\doiprefix}{doi: }
+
+\bibitem[{Brooks et~al.(2009)B. R. Brooks and C. L. Brooks and A. D. Mackerell
+  and L. Nilsson and R. J. Petrella and B. Roux and Y. Won and G. Archontis and
+  C. Bartels and S. Boresch and A. Caflisch and L. Caves and Q. Cui and A. R.
+  Dinner and M. Feig and S. Fischer and J. Gao and M. Hodoscek and W. Im and K.
+  Kuczera and T. Lazaridis and J. Ma and V. Ovchinnikov and E. Paci and R. W.
+  Pastor and C. B. Post and J. Z. Pu and M. Schaefer and B. Tidor and R. M.
+  Venable and H. L. Woodcock and X. Wu and W. Yang and D. M. York and M.
+  Karplus}]{CHARMM2009}
+\textbf{\color{LiveCoMSMediumGrey} Brooks BR}, Brooks CL, Mackerell AD, Nilsson
+  L, Petrella RJ, Roux B, Won Y, Archontis G, Bartels C, Boresch S, Caflisch A,
+  Caves L, Cui Q, Dinner AR, Feig M, Fischer S, Gao J, Hodoscek M, Im W,
+  Kuczera K, et~al.
+\newblock CHARMM: the biomolecular simulation program.
+\newblock J Comput Chem.  2009 Jul; 30(10):1545--1614.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/jcc.21287},
+  \href{10.1002/jcc.21287}{\doiprefix \detokenize{10.1002/jcc.21287}}.
+
+\bibitem[{Ferguson(2017)Ferguson, Andrew L}]{ferguson2017bayeswham}
+\textbf{\color{LiveCoMSMediumGrey} Ferguson AL}.
+\newblock BayesWHAM: A Bayesian approach for free energy estimation,
+  reweighting, and uncertainty quantification in the weighted histogram
+  analysis method.
+\newblock Journal of Computational Chemistry.  2017; 38(18):1583--1605.
+
+\bibitem[{Grossfield(2014)Grossfield, A.}]{WHAM}
+\textbf{\color{LiveCoMSMediumGrey} Grossfield A}, An efficient implementation
+  of the Weighted Histogram Analysis Method {(WHAM)},
+  http://membrane.urmc.rochester.edu/content/wham; 2014.
+\newblock \urlprefix\url{http://membrane.urmc.rochester.edu/content/wham}.
+
+\bibitem[{Kirkwood(1935)Kirkwood, John G}]{Kirkwood-1935}
+\textbf{\color{LiveCoMSMediumGrey} Kirkwood JG}.
+\newblock Statistical mechanics of fluid mixtures.
+\newblock The Journal of Chemical Physics.  1935; 3(5):300--313.
+
+\bibitem[{Kumar et~al.(1992)Kumar, S. and Bouzida, D. and Swendsen, R. H. and
+  Kollman, P. A. and Rosenberg, J. M.}]{Swendsen-1992}
+\textbf{\color{LiveCoMSMediumGrey} Kumar S}, Bouzida D, Swendsen RH, Kollman
+  PA, Rosenberg JM.
+\newblock The weighted histogram analysis method for free-energy calculations
+  on biomolecules. \ {I}. {T}he method.
+\newblock J Comput Chem.  1992; 13:1011--1021.
+
+\bibitem[{Kumar et~al.(1995)Kumar, S. and Rosenberg, J. M. and Bouzida, D. and
+  Swendsen, R. H. and Kollman, P. A.}]{Swendsen-1995}
+\textbf{\color{LiveCoMSMediumGrey} Kumar S}, Rosenberg JM, Bouzida D, Swendsen
+  RH, Kollman PA.
+\newblock Multidimensional Free-Energy Calculations Using the Weighted
+  Histogram Analysis Method.
+\newblock J Comput Chem.  1995; 16:1339--1350.
+
+\bibitem[{Neale et~al.(2014)Neale, Chris and Hsu, Jenny C. Y. and Yip,
+  Christopher M. and Pom{\`{e}}s, R{\'{e}}gis}]{Neale2014}
+\textbf{\color{LiveCoMSMediumGrey} Neale C}, Hsu JCY, Yip CM, Pom{\`{e}}s R.
+\newblock {Indolicidin binding induces thinning of a lipid bilayer}.
+\newblock Biophys J.  2014; 106(8):29--31.
+\newblock
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0006349514002756},
+  \href{10.1016/j.bpj.2014.02.031}{\doiprefix
+  \detokenize{10.1016/j.bpj.2014.02.031}}.
+
+\bibitem[{Pronk et~al.(2013)Pronk, Sander and P{\'{a}}ll, Szil{\'{a}}rd and
+  Schulz, Roland and Larsson, Per and Bjelkmar, P{\"{a}}r and Apostolov, Rossen
+  and Shirts, Michael R. and Smith, Jeremy C. and Kasson, Peter M. and {van der
+  Spoel}, David and Hess, Berk and Lindahl, Erik}]{Lindahl-2013}
+\textbf{\color{LiveCoMSMediumGrey} Pronk S}, P{\'{a}}ll S, Schulz R, Larsson P,
+  Bjelkmar P, Apostolov R, Shirts MR, Smith JC, Kasson PM, {van der Spoel} D,
+  Hess B, Lindahl E.
+\newblock GROMACS 4.5: a high-throughput and highly parallel open source
+  molecular simulation toolkit.
+\newblock Bioinformatics.  2013 Apr; 29(7):845--854.
+\newblock \urlprefix\url{http://dx.doi.org/10.1093/bioinformatics/btt055},
+  \href{10.1093/bioinformatics/btt055}{\doiprefix
+  \detokenize{10.1093/bioinformatics/btt055}}.
+
+\bibitem[{Roux(1995)Roux, B.}]{Roux-1995}
+\textbf{\color{LiveCoMSMediumGrey} Roux B}.
+\newblock The calculation of the potential of mean force using computer
+  simulation.
+\newblock Comp Phys Comm.  1995; 91:275--282.
+
+\end{thebibliography}
