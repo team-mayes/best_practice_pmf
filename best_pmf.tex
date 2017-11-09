@@ -148,6 +148,20 @@ $\Delta A(xi) = \sum_{k=1}^K \sum_{n=1}^N \sum W_i(x_n) I_k(x_n)$, where $I_k$ i
 
 \end{itemize}
 
+\subsection{Selecting collective variables for sampling}
+
+[Andy F]
+
+\begin{itemize}
+\item Intuition / experience based selection of CVs
+\item ``Perils of projection'' -- hidden barrier problem, artificial collapse of kinetically distinct states
+\item Number of CVs and curse of dimensionality -- exponential increase in sampling cost with number of CVs
+\item Post-hoc projection into CVs other than those in which sampling was conducted \cite{ferguson2017bayeswham}
+\item Requirement for explicit (MC) and differentiable (MD) expressions for CVs in terms of atomic coordinates
+\item Systematic techniques for CV discovery (PCA, Isomap, LLE, dMaps, ANNs)
+\end{itemize}
+
+
 \section{Considerations before you start computing}
 % TODO: check the outline below and delete is covered in the text written so far
 % Up for task: Allan
@@ -174,18 +188,6 @@ $\Delta A(xi) = \sum_{k=1}^K \sum_{n=1}^N \sum W_i(x_n) I_k(x_n)$, where $I_k$ i
 \subsection{Checklist for designing a free energy profile calculation}
 \input{checklist} % Alan Grossfield
 
-\section{Selecting collective variables for sampling}
-
-[Andy F]
-
-\begin{itemize}
-\item Intuition / experience based selection of CVs
-\item ``Perils of projection'' -- hidden barrier problem, artificial collapse of kinetically distinct states
-\item Number of CVs and curse of dimensionality -- exponential increase in sampling cost with number of CVs
-\item Post-hoc projection into CVs other than those in which sampling was conducted \cite{ferguson2017bayeswham}
-\item Requirement for explicit (MC) and differentiable (MD) expressions for CVs in terms of atomic coordinates
-\item Systematic techniques for CV discovery (PCA, Isomap, LLE, dMaps, ANNs)
-\end{itemize}
 
 \section{Sampling techniques}
 % TODO: this is the outline from the meeting. Needs expansion.
